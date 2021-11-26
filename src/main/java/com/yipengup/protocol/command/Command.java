@@ -1,0 +1,16 @@
+package com.yipengup.protocol.command;
+
+/**
+ * 指定指令的类型
+ *
+ * @author yipengup
+ * @date 2021/11/25
+ */
+public interface Command {
+
+    /**
+     * 登录请求指令
+     */
+    byte LOGIN_REQUEST = 1;
+
+}
