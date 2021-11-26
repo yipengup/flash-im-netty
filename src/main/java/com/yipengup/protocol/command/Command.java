@@ -13,4 +13,9 @@ public interface Command {
      */
     byte LOGIN_REQUEST = 1;
 
+    /**
+     * 登录响应指令
+     */
+    byte LOGIN_RESPONSE = 2;
+
 }

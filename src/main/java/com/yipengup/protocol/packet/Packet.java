@@ -1,4 +1,4 @@
-package com.yipengup.protocol.command;
+package com.yipengup.protocol.packet;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;

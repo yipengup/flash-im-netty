@@ -1,5 +1,7 @@
-package com.yipengup.protocol.command;
+package com.yipengup.protocol.packet.client;
 
+import com.yipengup.protocol.command.Command;
+import com.yipengup.protocol.packet.Packet;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

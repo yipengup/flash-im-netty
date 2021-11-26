@@ -1,8 +1,13 @@
-package com.yipengup.protocol.command;
+package com.yipengup.protocol.packet;
 
+import com.yipengup.protocol.command.Command;
+import com.yipengup.protocol.packet.client.LoginRequestPacket;
+import com.yipengup.protocol.packet.server.LoginResponsePacket;
 import com.yipengup.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +18,10 @@ import java.util.Map;
  * @author yipengup
  * @date 2021/11/26
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PacketCodeC {
+
+    public static final PacketCodeC PACKET_CODE_C = new PacketCodeC();
 
     /**
      * 魔术常量
@@ -35,6 +43,7 @@ public class PacketCodeC {
         SERIALIZER_MAP.put(Serializer.SERIALIZER_ALGORITHM_JSON, Serializer.DEFAULT_SERIALIZER);
         PACKET_MAP = new HashMap<>(2);
         PACKET_MAP.put(Command.LOGIN_REQUEST, LoginRequestPacket.class);
+        PACKET_MAP.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
     }
 
     /**
@@ -43,9 +52,9 @@ public class PacketCodeC {
      * @param packet 参数的数据包
      * @return 传输出去的数据
      */
-    public ByteBuf encode(Packet packet) {
+    public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
         // 从ByteBuf管理器中获取到一个适合IO的直接缓冲区
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
+        ByteBuf byteBuf = byteBufAllocator.ioBuffer();
         // 当前采用默认序列化方式
         Serializer defaultSerializer = Serializer.DEFAULT_SERIALIZER;
         byte[] bytes = defaultSerializer.serialize(packet);

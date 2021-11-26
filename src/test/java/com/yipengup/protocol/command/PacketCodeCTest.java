@@ -1,6 +1,10 @@
 package com.yipengup.protocol.command;
 
+import com.yipengup.protocol.packet.Packet;
+import com.yipengup.protocol.packet.PacketCodeC;
+import com.yipengup.protocol.packet.client.LoginRequestPacket;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import org.junit.Test;
 
 /**
@@ -18,8 +22,8 @@ public class PacketCodeCTest {
         loginRequestPacket.setUsername("yipengup");
         loginRequestPacket.setPassword("yipengup");
 
-        PacketCodeC packetCodeC = new PacketCodeC();
-        ByteBuf byteBuf = packetCodeC.encode(loginRequestPacket);
+        PacketCodeC packetCodeC = PacketCodeC.PACKET_CODE_C;
+        ByteBuf byteBuf = packetCodeC.encode(ByteBufAllocator.DEFAULT, loginRequestPacket);
 
         // 解码
         Packet packet = packetCodeC.decode(byteBuf);
