@@ -1,4 +1,4 @@
-package com.yipengup.protocol.packet.client;
+package com.yipengup.protocol.packet.response;
 
 import com.yipengup.protocol.command.Command;
 import com.yipengup.protocol.packet.Packet;
@@ -11,14 +11,13 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LoginRequestPacket extends Packet {
+public class LoginResponsePacket extends Packet {
 
-    private Integer userId;
-    private String username;
-    private String password;
+    private Boolean success;
+    private String description;
 
     @Override
     public Byte getCommand() {
-        return Command.LOGIN_REQUEST;
+        return Command.LOGIN_RESPONSE;
     }
 }

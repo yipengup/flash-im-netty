@@ -1,9 +1,9 @@
-package com.yipengup.protocol.packet.handler.client;
+package com.yipengup.protocol.packet.handler.response;
 
 import com.yipengup.protocol.command.Command;
 import com.yipengup.protocol.packet.Packet;
 import com.yipengup.protocol.packet.handler.PacketHandler;
-import com.yipengup.protocol.packet.server.LoginResponsePacket;
+import com.yipengup.protocol.packet.response.LoginResponsePacket;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.Date;

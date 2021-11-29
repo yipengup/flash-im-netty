@@ -2,7 +2,7 @@ package com.yipengup.client;
 
 import com.yipengup.protocol.packet.Packet;
 import com.yipengup.protocol.packet.PacketCodeC;
-import com.yipengup.protocol.packet.client.LoginRequestPacket;
+import com.yipengup.protocol.packet.request.LoginRequestPacket;
 import com.yipengup.protocol.packet.handler.PacketHandlerRegister;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

@@ -1,8 +1,8 @@
 package com.yipengup.protocol.packet;
 
 import com.yipengup.protocol.command.Command;
-import com.yipengup.protocol.packet.client.LoginRequestPacket;
-import com.yipengup.protocol.packet.server.LoginResponsePacket;
+import com.yipengup.protocol.packet.request.LoginRequestPacket;
+import com.yipengup.protocol.packet.response.LoginResponsePacket;
 import com.yipengup.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;

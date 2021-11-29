@@ -1,11 +1,11 @@
-package com.yipengup.protocol.packet.handler.server;
+package com.yipengup.protocol.packet.handler.request;
 
 import com.yipengup.protocol.command.Command;
 import com.yipengup.protocol.packet.Packet;
 import com.yipengup.protocol.packet.PacketCodeC;
-import com.yipengup.protocol.packet.client.LoginRequestPacket;
+import com.yipengup.protocol.packet.request.LoginRequestPacket;
 import com.yipengup.protocol.packet.handler.PacketHandler;
-import com.yipengup.protocol.packet.server.LoginResponsePacket;
+import com.yipengup.protocol.packet.response.LoginResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 

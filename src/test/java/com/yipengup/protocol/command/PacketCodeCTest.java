@@ -2,7 +2,7 @@ package com.yipengup.protocol.command;
 
 import com.yipengup.protocol.packet.Packet;
 import com.yipengup.protocol.packet.PacketCodeC;
-import com.yipengup.protocol.packet.client.LoginRequestPacket;
+import com.yipengup.protocol.packet.request.LoginRequestPacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import org.junit.Test;

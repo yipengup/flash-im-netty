@@ -1,8 +1,8 @@
 package com.yipengup.protocol.packet.handler;
 
 import com.yipengup.protocol.packet.Packet;
-import com.yipengup.protocol.packet.handler.client.LoginResponsePacketHandler;
-import com.yipengup.protocol.packet.handler.server.LoginRequestPacketHandler;
+import com.yipengup.protocol.packet.handler.response.LoginResponsePacketHandler;
+import com.yipengup.protocol.packet.handler.request.LoginRequestPacketHandler;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
