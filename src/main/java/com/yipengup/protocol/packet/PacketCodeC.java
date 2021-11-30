@@ -60,6 +60,21 @@ public class PacketCodeC {
         // 从ByteBuf管理器中获取到一个适合IO的直接缓冲区
         ByteBuf byteBuf = byteBufAllocator.ioBuffer();
         // 当前采用默认序列化方式
+        return getByteBuf(packet, byteBuf);
+    }
+
+    /**
+     * 编码
+     *
+     * @param packet 参数的数据包
+     * @return 传输出去的数据
+     */
+    public ByteBuf encode0(Packet packet, ByteBuf byteBuf) {
+        return getByteBuf(packet, byteBuf);
+    }
+
+    private ByteBuf getByteBuf(Packet packet, ByteBuf byteBuf) {
+        // 当前采用默认序列化方式
         Serializer defaultSerializer = Serializer.DEFAULT_SERIALIZER;
         byte[] bytes = defaultSerializer.serialize(packet);
         // 数据报 = 魔术常量（4字节）+ 版本号（1字节） + 序列化方式（1字节） + 指令类型（1字节） + 数据长度（4字节） + 真实数据（byte[]）

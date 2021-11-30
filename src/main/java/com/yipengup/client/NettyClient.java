@@ -1,5 +1,9 @@
 package com.yipengup.client;
 
+import com.yipengup.client.handler.LoginResponsePacketHandler;
+import com.yipengup.client.handler.MessageResponsePacketHandler;
+import com.yipengup.codec.PacketDecode;
+import com.yipengup.codec.PacketEncode;
 import com.yipengup.protocol.packet.PacketCodeC;
 import com.yipengup.protocol.packet.request.MessageRequestPacket;
 import com.yipengup.util.LoginUtil;
@@ -33,7 +37,10 @@ public class NettyClient {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 将客户端Channel处理器注册到管道中
-                        ch.pipeline().addLast(new ClientChannelHandler());
+                        ch.pipeline().addLast(new PacketDecode());
+                        ch.pipeline().addLast(new LoginResponsePacketHandler());
+                        ch.pipeline().addLast(new MessageResponsePacketHandler());
+                        ch.pipeline().addLast(new PacketEncode());
                     }
                 });
 

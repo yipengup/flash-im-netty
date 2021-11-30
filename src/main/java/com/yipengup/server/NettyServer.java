@@ -1,5 +1,9 @@
 package com.yipengup.server;
 
+import com.yipengup.codec.PacketDecode;
+import com.yipengup.codec.PacketEncode;
+import com.yipengup.server.handler.LoginRequestPacketHandler;
+import com.yipengup.server.handler.MessageRequestPacketHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -28,7 +32,10 @@ public class NettyServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 将服务端Channel处理器注册到管道中
-                        ch.pipeline().addLast(new ServerChannelHandler());
+                        ch.pipeline().addLast(new PacketDecode());
+                        ch.pipeline().addLast(new LoginRequestPacketHandler());
+                        ch.pipeline().addLast(new MessageRequestPacketHandler());
+                        ch.pipeline().addLast(new PacketEncode());
                     }
                 });
 
