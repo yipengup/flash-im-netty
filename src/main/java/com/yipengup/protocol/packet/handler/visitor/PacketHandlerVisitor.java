@@ -12,6 +12,16 @@ import io.netty.channel.ChannelHandlerContext;
 public interface PacketHandlerVisitor {
 
     /**
+     * 用于标识处理什么指令的数据包
+     *
+     * @param command command
+     * @return 是否处理指定的数据包
+     */
+    default boolean accept(byte command) {
+        return getCommand() == command;
+    }
+
+    /**
      * 处理客户端消息
      *
      * @param packet 传输的消息
@@ -26,6 +36,8 @@ public interface PacketHandlerVisitor {
      * @param ctx    ChannelHandlerContext
      */
     void handleServerPacket(Packet packet, ChannelHandlerContext ctx);
+
+    byte getCommand();
 
 
 }

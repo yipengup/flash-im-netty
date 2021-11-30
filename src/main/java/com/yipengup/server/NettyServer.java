@@ -35,9 +35,9 @@ public class NettyServer {
         // 监听某个端口
         serverBootstrap.bind(8888).addListener(future -> {
             if (future.isSuccess()) {
-                System.out.println(new Date() + "：服务端监听8888端口成功");
+                System.out.println(new Date() + "：服务端监听8888端口成功!");
             } else {
-                System.out.println(new Date() + "：服务端监听8888端口失败");
+                System.out.println(new Date() + "：服务端监听8888端口失败!");
             }
         });
     }

@@ -2,6 +2,7 @@ package com.yipengup.server;
 
 import com.yipengup.protocol.packet.Packet;
 import com.yipengup.protocol.packet.PacketCodeC;
+import com.yipengup.protocol.packet.TerminalTypeEnum;
 import com.yipengup.protocol.packet.handler.PacketHandlerRegister;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -22,6 +23,6 @@ public class ServerChannelHandler extends ChannelInboundHandlerAdapter {
         System.out.println(new Date() + "：服务端接收到数据");
         ByteBuf byteBuf = (ByteBuf) msg;
         Packet packet = PacketCodeC.PACKET_CODE_C.decode(byteBuf);
-        PacketHandlerRegister.handle(packet, ctx);
+        PacketHandlerRegister.handle(packet, ctx, TerminalTypeEnum.SERVE);
     }
 }

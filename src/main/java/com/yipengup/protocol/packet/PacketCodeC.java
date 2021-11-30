@@ -2,7 +2,9 @@ package com.yipengup.protocol.packet;
 
 import com.yipengup.protocol.command.Command;
 import com.yipengup.protocol.packet.request.LoginRequestPacket;
+import com.yipengup.protocol.packet.request.MessageRequestPacket;
 import com.yipengup.protocol.packet.response.LoginResponsePacket;
+import com.yipengup.protocol.packet.response.MessageResponsePacket;
 import com.yipengup.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -44,6 +46,8 @@ public class PacketCodeC {
         PACKET_MAP = new HashMap<>(2);
         PACKET_MAP.put(Command.LOGIN_REQUEST, LoginRequestPacket.class);
         PACKET_MAP.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
+        PACKET_MAP.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
+        PACKET_MAP.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
     }
 
     /**
@@ -80,10 +84,10 @@ public class PacketCodeC {
 
         // 数据报 = 魔术常量（4字节）+ 版本号（1字节） + 序列化方式（1字节） + 指令类型（1字节） + 数据长度（4字节） + 真实数据（byte[]）
         int magicNumber = byteBuf.readInt();
-        System.out.println("magicNumber = " + magicNumber);
+        // System.out.println("magicNumber = " + magicNumber);
 
         byte version = byteBuf.readByte();
-        System.out.println("version = " + version);
+        // System.out.println("version = " + version);
 
         // 需要根据序列化算法计算出序列化方式
         byte serializerAlgorithm = byteBuf.readByte();
@@ -93,12 +97,12 @@ public class PacketCodeC {
         Class<? extends Packet> clazz = PACKET_MAP.get(command);
 
         int dataLength = byteBuf.readInt();
-        System.out.println("dataLength = " + dataLength);
+        // System.out.println("dataLength = " + dataLength);
 
         byte[] bytes = new byte[dataLength];
         byteBuf.readBytes(bytes);
         Packet packet = serializer.deserialize(bytes, clazz);
-        System.out.println("packet = " + packet);
+        // System.out.println("packet = " + packet);
         return packet;
     }
 
