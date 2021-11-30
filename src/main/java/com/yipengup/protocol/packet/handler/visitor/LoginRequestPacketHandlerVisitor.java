@@ -21,7 +21,8 @@ public class LoginRequestPacketHandlerVisitor implements PacketHandlerVisitor {
 
     @Override
     public void handleClientPacket(Packet packet, ChannelHandlerContext ctx) {
-        throw new UnsupportedOperationException();
+        // throw new UnsupportedOperationException();
+        System.out.println(new Date() + "：收到服务端消息：" + packet);
     }
 
     @Override

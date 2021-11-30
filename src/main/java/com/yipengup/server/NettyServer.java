@@ -28,7 +28,17 @@ public class NettyServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 将服务端Channel处理器注册到管道中
-                        ch.pipeline().addLast(new ServerChannelHandler());
+                        // ch.pipeline().addLast(new ServerChannelHandler());
+
+                        // 添加InboundHandler
+                        ch.pipeline().addLast(new InboundHandlerA());
+                        ch.pipeline().addLast(new InboundHandlerB());
+                        ch.pipeline().addLast(new InboundHandlerC());
+
+                        // 添加outBound
+                        ch.pipeline().addLast(new OutBoundHandlerA());
+                        ch.pipeline().addLast(new OutBoundHandlerB());
+                        ch.pipeline().addLast(new OutBoundHandlerC());
                     }
                 });
 

@@ -44,7 +44,7 @@ public class NettyClient {
                 //    连接成功后， 向服务端发送消息
                 ChannelFuture channelFuture = (ChannelFuture) future;
                 Channel channel = channelFuture.channel();
-                startConsoleThread(channel);
+                // startConsoleThread(channel);
             } else {
                 System.out.println(new Date() + "：客户端连接失败!");
             }
