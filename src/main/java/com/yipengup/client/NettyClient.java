@@ -6,6 +6,7 @@ import com.yipengup.codec.PacketDecode;
 import com.yipengup.codec.PacketEncode;
 import com.yipengup.protocol.packet.PacketCodeC;
 import com.yipengup.protocol.packet.request.MessageRequestPacket;
+import com.yipengup.server.handler.Spliter;
 import com.yipengup.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -37,6 +38,8 @@ public class NettyClient {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 将客户端Channel处理器注册到管道中
+                        // ch.pipeline().addLast(new FirstClientHandler());
+                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         ch.pipeline().addLast(new PacketDecode());
                         ch.pipeline().addLast(new LoginResponsePacketHandler());
                         ch.pipeline().addLast(new MessageResponsePacketHandler());
