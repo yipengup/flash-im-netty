@@ -7,7 +7,6 @@ import com.yipengup.codec.PacketEncode;
 import com.yipengup.protocol.packet.PacketCodeC;
 import com.yipengup.protocol.packet.request.MessageRequestPacket;
 import com.yipengup.server.handler.Spliter;
-import com.yipengup.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -38,7 +37,6 @@ public class NettyClient {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 将客户端Channel处理器注册到管道中
-                        // ch.pipeline().addLast(new FirstClientHandler());
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         ch.pipeline().addLast(new PacketDecode());
                         ch.pipeline().addLast(new LoginResponsePacketHandler());
@@ -63,20 +61,18 @@ public class NettyClient {
 
     private static void startConsoleThread(Channel channel) {
         new Thread(() -> {
-            while (!Thread.interrupted()) {
+            while (!Thread.interrupted() && channel.isActive()) {
                 // 登录成功之后才能发送消息
-                if (LoginUtil.hasLogin(channel)) {
-                    System.out.println("输入消息发送至服务端：");
-                    Scanner scanner = new Scanner(System.in);
-                    // 获取到消息
-                    String line = scanner.nextLine();
+                System.out.println("输入消息发送至服务端：");
+                Scanner scanner = new Scanner(System.in);
+                // 获取到消息
+                String line = scanner.nextLine();
 
-                    //    组装消息数据包
-                    MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
-                    messageRequestPacket.setMessage(line);
-                    ByteBuf byteBuf = PacketCodeC.PACKET_CODE_C.encode(channel.alloc(), messageRequestPacket);
-                    channel.writeAndFlush(byteBuf);
-                }
+                //    组装消息数据包
+                MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
+                messageRequestPacket.setMessage(line);
+                ByteBuf byteBuf = PacketCodeC.PACKET_CODE_C.encode(channel.alloc(), messageRequestPacket);
+                channel.writeAndFlush(byteBuf);
             }
         }).start();
     }

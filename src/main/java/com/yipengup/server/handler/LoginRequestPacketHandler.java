@@ -2,6 +2,7 @@ package com.yipengup.server.handler;
 
 import com.yipengup.protocol.packet.request.LoginRequestPacket;
 import com.yipengup.protocol.packet.response.LoginResponsePacket;
+import com.yipengup.util.LoginUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -26,6 +27,7 @@ public class LoginRequestPacketHandler extends SimpleChannelInboundHandler<Login
         if (valid(msg)) {
             System.out.println(new Date() + "：登录成功！");
             loginResponsePacket.setSuccess(true);
+            LoginUtil.markAsLogin(ctx.channel());
         } else {
             System.out.println(new Date() + "：登录失败！");
             loginResponsePacket.setSuccess(false);
@@ -39,5 +41,23 @@ public class LoginRequestPacketHandler extends SimpleChannelInboundHandler<Login
     private boolean valid(LoginRequestPacket loginRequestPacket) {
         return Objects.equals(loginRequestPacket.getUsername(), "yipengup")
                 && Objects.equals(loginRequestPacket.getPassword(), "pwd");
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("LoginRequestPacketHandler.channelUnregistered");
+        super.channelUnregistered(ctx);
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("LoginRequestPacketHandler.channelInactive");
+        super.channelInactive(ctx);
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("LoginRequestPacketHandler.handlerRemoved");
+        super.handlerRemoved(ctx);
     }
 }
