@@ -1,12 +1,8 @@
 package com.yipengup.client;
 
-import com.yipengup.client.handler.LoginResponsePacketHandler;
-import com.yipengup.client.handler.MessageResponsePacketHandler;
-import com.yipengup.codec.PacketDecode;
-import com.yipengup.codec.PacketEncode;
+import com.yipengup.client.handler.FirstClientHandler;
 import com.yipengup.protocol.packet.PacketCodeC;
 import com.yipengup.protocol.packet.request.MessageRequestPacket;
-import com.yipengup.server.handler.Spliter;
 import com.yipengup.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -38,12 +34,12 @@ public class NettyClient {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 将客户端Channel处理器注册到管道中
-                        // ch.pipeline().addLast(new FirstClientHandler());
-                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
-                        ch.pipeline().addLast(new PacketDecode());
-                        ch.pipeline().addLast(new LoginResponsePacketHandler());
-                        ch.pipeline().addLast(new MessageResponsePacketHandler());
-                        ch.pipeline().addLast(new PacketEncode());
+                        ch.pipeline().addLast(new FirstClientHandler());
+                        // ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
+                        // ch.pipeline().addLast(new PacketDecode());
+                        // ch.pipeline().addLast(new LoginResponsePacketHandler());
+                        // ch.pipeline().addLast(new MessageResponsePacketHandler());
+                        // ch.pipeline().addLast(new PacketEncode());
                     }
                 });
 
@@ -54,7 +50,7 @@ public class NettyClient {
                 //    连接成功后， 向服务端发送消息
                 ChannelFuture channelFuture = (ChannelFuture) future;
                 Channel channel = channelFuture.channel();
-                startConsoleThread(channel);
+                // startConsoleThread(channel);
             } else {
                 System.out.println(new Date() + "：客户端连接失败!");
             }

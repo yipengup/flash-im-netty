@@ -14,11 +14,13 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 20; i++) {
             byte[] bytes = "你好，欢迎关注我的微信公众号，《闪电侠的博客》!".getBytes(StandardCharsets.UTF_8);
             ByteBuf byteBuf = ctx.alloc().buffer();
             byteBuf.writeBytes(bytes);
             ctx.channel().writeAndFlush(byteBuf);
         }
+
+        ctx.channel().close();
     }
 }
