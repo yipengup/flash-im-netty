@@ -1,6 +1,8 @@
 package com.yipengup.client.handler;
 
 import com.yipengup.protocol.packet.response.LoginResponsePacket;
+import com.yipengup.session.Session;
+import com.yipengup.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -15,9 +17,10 @@ public class LoginResponsePacketHandler extends SimpleChannelInboundHandler<Logi
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket msg) throws Exception {
-        System.out.println(new Date() + "：收到服务端消息：" + msg);
         if (Objects.equals(msg.getSuccess(), true)) {
             System.out.println(new Date() + "：【" + msg.getUserName() + "】登录成功！！！userId = " + msg.getUserId());
+            // 客户端也需要设置登录成功的标志
+            SessionUtil.bindSession(new Session(msg.getUserId(), msg.getUserName()), ctx.channel());
         } else {
             System.out.println(new Date() + "：【" + msg.getUserName() + "】登录失败！！！errMsg = " + msg.getDescription());
         }
@@ -25,7 +28,6 @@ public class LoginResponsePacketHandler extends SimpleChannelInboundHandler<Logi
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println(new Date() + "：客户端连接被关闭！！！");
-
+        System.out.println(new Date() + "：连接被关闭！！！");
     }
 }

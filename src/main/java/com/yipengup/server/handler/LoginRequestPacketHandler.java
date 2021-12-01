@@ -22,7 +22,6 @@ public class LoginRequestPacketHandler extends SimpleChannelInboundHandler<Login
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket msg) throws Exception {
-        System.out.println(new Date() + "：收到客户端消息用户信息：" + msg);
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket();
         String userId = UUID.randomUUID().toString();
         loginResponsePacket.setUserId(userId);
@@ -38,7 +37,12 @@ public class LoginRequestPacketHandler extends SimpleChannelInboundHandler<Login
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println(new Date() + "：服务端连接被关闭！！！");
+        if (SessionUtil.hasLogin(ctx.channel())) {
+            String userName = SessionUtil.getSession(ctx.channel()).getUserName();
+            System.out.println(new Date() + "【" + userName + "】" + "：连接被关闭！！！");
+        } else {
+            System.out.println(new Date() + "【未知用户】" + "：连接被关闭！！！");
+        }
         SessionUtil.unBindSession(SessionUtil.getSession(ctx.channel()), ctx.channel());
     }
 

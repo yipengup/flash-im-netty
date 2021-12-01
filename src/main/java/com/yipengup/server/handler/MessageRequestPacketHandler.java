@@ -2,10 +2,14 @@ package com.yipengup.server.handler;
 
 import com.yipengup.protocol.packet.request.MessageRequestPacket;
 import com.yipengup.protocol.packet.response.MessageResponsePacket;
+import com.yipengup.session.Session;
+import com.yipengup.util.SessionUtil;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author yipengup
@@ -14,14 +18,21 @@ import java.util.Date;
 public class MessageRequestPacketHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket msg) throws Exception {
-        System.out.println(new Date() + "：收到客户端消息：" + msg.getMessage());
-        if ("bye".equals(msg.getMessage())) {
-            ctx.channel().close();
+
+        String toUserId = msg.getToUserId();
+        // 获取到接收消息用户的channel信息
+        Channel channel = SessionUtil.getChannel(toUserId);
+        if (Objects.isNull(channel) || !SessionUtil.hasLogin(channel)) {
+            System.out.println(new Date() + "：用户没有登录：userId = " + toUserId);
             return;
         }
+
         // 向客户端发送响应消息
         MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
-        messageResponsePacket.setMessage("服务端回复【" + msg.getMessage() + "】");
-        ctx.channel().writeAndFlush(messageResponsePacket);
+        Session session = SessionUtil.getSession(ctx.channel());
+        messageResponsePacket.setFromUserId(session.getUserId());
+        messageResponsePacket.setFromUserName(session.getUserName());
+        messageResponsePacket.setMessage(msg.getMessage());
+        channel.writeAndFlush(messageResponsePacket);
     }
 }
