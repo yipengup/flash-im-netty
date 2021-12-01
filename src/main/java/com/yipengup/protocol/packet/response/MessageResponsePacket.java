@@ -13,6 +13,16 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class MessageResponsePacket extends Packet {
 
+    /**
+     * 消息的来源
+     */
+    private String fromUserId;
+
+    /**
+     * 消息发送人的名称
+     */
+    private String fromUserName;
+
     private String message;
 
     @Override

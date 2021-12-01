@@ -18,7 +18,6 @@ public class PacketCodeCTest {
 
         // 编码
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-        loginRequestPacket.setUserId(1);
         loginRequestPacket.setUsername("yipengup");
         loginRequestPacket.setPassword("yipengup");
 

@@ -12,6 +12,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class MessageRequestPacket extends Packet {
 
+    /**
+     * 发给谁
+     */
+    private String toUserId;
     private String message;
 
     @Override

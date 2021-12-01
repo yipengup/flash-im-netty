@@ -13,6 +13,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class LoginResponsePacket extends Packet {
 
+    private String userId;
+    private String userName;
+
     private Boolean success;
     private String description;
 
