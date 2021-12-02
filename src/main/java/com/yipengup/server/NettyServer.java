@@ -1,7 +1,6 @@
 package com.yipengup.server;
 
-import com.yipengup.codec.PacketDecode;
-import com.yipengup.codec.PacketEncode;
+import com.yipengup.codec.PacketCodeCHandler;
 import com.yipengup.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -31,8 +30,8 @@ public class NettyServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
-                        ch.pipeline().addLast(new PacketDecode());
                         // 单例模式，多个channel共享同一个handler
+                        ch.pipeline().addLast(PacketCodeCHandler.INSTANCE);
                         ch.pipeline().addLast(LoginRequestPacketHandler.INSTANCE);
                         ch.pipeline().addLast(AuthHandler.INSTANCE);
                         ch.pipeline().addLast(MessageRequestPacketHandler.INSTANCE);
@@ -41,7 +40,6 @@ public class NettyServer {
                         ch.pipeline().addLast(GroupJoinMemberRequestPacketHandler.INSTANCE);
                         ch.pipeline().addLast(GroupDeleteMemberRequestPacketHandler.INSTANCE);
                         ch.pipeline().addLast(GroupMessageRequestPacketHandler.INSTANCE);
-                        ch.pipeline().addLast(new PacketEncode());
                     }
                 });
 
