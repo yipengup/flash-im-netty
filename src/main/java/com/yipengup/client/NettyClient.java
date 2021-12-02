@@ -3,9 +3,11 @@ package com.yipengup.client;
 import com.yipengup.client.command.ConsoleCommand;
 import com.yipengup.client.command.ConsoleCommandManager;
 import com.yipengup.client.command.LoginConsoleCommand;
+import com.yipengup.client.handler.HeartBeatTimerScheduleHandler;
 import com.yipengup.client.handler.IMClientPacketHandler;
 import com.yipengup.client.handler.LoginResponsePacketHandler;
 import com.yipengup.codec.PacketCodeCHandler;
+import com.yipengup.server.handler.IMIdleStateHandler;
 import com.yipengup.server.handler.Spliter;
 import com.yipengup.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
@@ -37,11 +39,14 @@ public class NettyClient {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 将客户端Channel处理器注册到管道中
+                        // 这里放在解码之前，首个channelHandler，只要接收到数据就会更新超时时间
+                        ch.pipeline().addLast(new IMIdleStateHandler());
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         // 单例模式，多个channel共享同一个handler
                         ch.pipeline().addLast(PacketCodeCHandler.INSTANCE);
                         ch.pipeline().addLast(LoginResponsePacketHandler.INSTANCE);
                         ch.pipeline().addLast(IMClientPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(new HeartBeatTimerScheduleHandler());
                     }
                 });
 

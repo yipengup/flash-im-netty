@@ -56,6 +56,8 @@ public class PacketCodeC {
         PACKET_MAP.put(Command.GROUP_DELETE_MEMBER_RESPONSE, GroupDeleteMemberResponsePacket.class);
         PACKET_MAP.put(Command.GROUP_MESSAGE_REQUEST, GroupMessageRequestPacket.class);
         PACKET_MAP.put(Command.GROUP_MESSAGE_RESPONSE, GroupMessageResponsePacket.class);
+        PACKET_MAP.put(Command.HEART_BEAT_REQUEST, HeartBeatRequestPacket.class);
+        PACKET_MAP.put(Command.HEART_BEAT_RESPONSE, HeartBeatResponsePacket.class);
     }
 
     /**

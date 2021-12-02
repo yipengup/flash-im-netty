@@ -34,6 +34,8 @@ public class IMClientPacketHandler extends SimpleChannelInboundHandler<Packet> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Packet msg) throws Exception {
-        COMMAND_CHANNEL_HANDLER_MAP.get(msg.getCommand()).channelRead(ctx, msg);
+        if (COMMAND_CHANNEL_HANDLER_MAP.containsKey(msg.getCommand())) {
+            COMMAND_CHANNEL_HANDLER_MAP.get(msg.getCommand()).channelRead(ctx, msg);
+        }
     }
 }

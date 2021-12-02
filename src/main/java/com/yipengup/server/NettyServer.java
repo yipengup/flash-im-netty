@@ -1,10 +1,7 @@
 package com.yipengup.server;
 
 import com.yipengup.codec.PacketCodeCHandler;
-import com.yipengup.server.handler.AuthHandler;
-import com.yipengup.server.handler.IMServerPacketHandler;
-import com.yipengup.server.handler.LoginRequestPacketHandler;
-import com.yipengup.server.handler.Spliter;
+import com.yipengup.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -32,10 +29,13 @@ public class NettyServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
+                        // 这里放在解码之前，首个channelHandler，只要接收到数据就会更新超时时间
+                        ch.pipeline().addLast(new IMIdleStateHandler());
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         // 单例模式，多个channel共享同一个handler
                         ch.pipeline().addLast(PacketCodeCHandler.INSTANCE);
                         ch.pipeline().addLast(LoginRequestPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(HeartBeatRequestPacketHandler.INSTANCE);
                         ch.pipeline().addLast(AuthHandler.INSTANCE);
                         ch.pipeline().addLast(IMServerPacketHandler.INSTANCE);
                     }
