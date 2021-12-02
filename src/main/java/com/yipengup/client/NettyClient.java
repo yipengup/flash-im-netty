@@ -3,7 +3,8 @@ package com.yipengup.client;
 import com.yipengup.client.command.ConsoleCommand;
 import com.yipengup.client.command.ConsoleCommandManager;
 import com.yipengup.client.command.LoginConsoleCommand;
-import com.yipengup.client.handler.*;
+import com.yipengup.client.handler.IMClientPacketHandler;
+import com.yipengup.client.handler.LoginResponsePacketHandler;
 import com.yipengup.codec.PacketCodeCHandler;
 import com.yipengup.server.handler.Spliter;
 import com.yipengup.util.SessionUtil;
@@ -40,12 +41,7 @@ public class NettyClient {
                         // 单例模式，多个channel共享同一个handler
                         ch.pipeline().addLast(PacketCodeCHandler.INSTANCE);
                         ch.pipeline().addLast(LoginResponsePacketHandler.INSTANCE);
-                        ch.pipeline().addLast(MessageResponsePacketHandler.INSTANCE);
-                        ch.pipeline().addLast(CreateGroupResponsePacketHandler.INSTANCE);
-                        ch.pipeline().addLast(GroupMemberListResponsePacketHandler.INSTANCE);
-                        ch.pipeline().addLast(GroupJoinMemberResponsePacketHandler.INSTANCE);
-                        ch.pipeline().addLast(GroupDeleteMemberResponsePacketHandler.INSTANCE);
-                        ch.pipeline().addLast(GroupMessageResponsePacketHandler.INSTANCE);
+                        ch.pipeline().addLast(IMClientPacketHandler.INSTANCE);
                     }
                 });
 

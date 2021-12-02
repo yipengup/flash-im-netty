@@ -1,7 +1,10 @@
 package com.yipengup.server;
 
 import com.yipengup.codec.PacketCodeCHandler;
-import com.yipengup.server.handler.*;
+import com.yipengup.server.handler.AuthHandler;
+import com.yipengup.server.handler.IMServerPacketHandler;
+import com.yipengup.server.handler.LoginRequestPacketHandler;
+import com.yipengup.server.handler.Spliter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -34,12 +37,7 @@ public class NettyServer {
                         ch.pipeline().addLast(PacketCodeCHandler.INSTANCE);
                         ch.pipeline().addLast(LoginRequestPacketHandler.INSTANCE);
                         ch.pipeline().addLast(AuthHandler.INSTANCE);
-                        ch.pipeline().addLast(MessageRequestPacketHandler.INSTANCE);
-                        ch.pipeline().addLast(CreateGroupRequestPacketHandler.INSTANCE);
-                        ch.pipeline().addLast(GroupMemberListRequestPacketHandler.INSTANCE);
-                        ch.pipeline().addLast(GroupJoinMemberRequestPacketHandler.INSTANCE);
-                        ch.pipeline().addLast(GroupDeleteMemberRequestPacketHandler.INSTANCE);
-                        ch.pipeline().addLast(GroupMessageRequestPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(IMServerPacketHandler.INSTANCE);
                     }
                 });
 
