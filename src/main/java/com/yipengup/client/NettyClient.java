@@ -45,6 +45,7 @@ public class NettyClient {
                         ch.pipeline().addLast(new GroupMemberListResponsePacketHandler());
                         ch.pipeline().addLast(new GroupJoinMemberResponsePacketHandler());
                         ch.pipeline().addLast(new GroupDeleteMemberResponsePacketHandler());
+                        ch.pipeline().addLast(new GroupMessageResponsePacketHandler());
                         ch.pipeline().addLast(new PacketEncode());
                     }
                 });

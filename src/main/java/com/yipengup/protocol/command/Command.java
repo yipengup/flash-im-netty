@@ -68,5 +68,9 @@ public interface Command {
      */
     byte GROUP_DELETE_MEMBER_RESPONSE = 12;
 
+    byte GROUP_MESSAGE_REQUEST = 13;
+
+    byte GROUP_MESSAGE_RESPONSE = 14;
+
 
 }

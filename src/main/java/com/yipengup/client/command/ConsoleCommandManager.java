@@ -21,6 +21,7 @@ public class ConsoleCommandManager implements ConsoleCommand {
         CONSOLE_COMMAND_MAP.put("groupMemberList", new GroupMemberListConsoleCommand());
         CONSOLE_COMMAND_MAP.put("groupJoin", new GroupJoinMemberConsoleCommand());
         CONSOLE_COMMAND_MAP.put("groupDelete", new GroupDeleteMemberConsoleCommand());
+        CONSOLE_COMMAND_MAP.put("groupMessage", new GroupMessageConsoleCommand());
     }
 
     @Override
