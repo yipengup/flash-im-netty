@@ -49,4 +49,8 @@ public class SessionUtil {
         GROUP_ID_CHANNEL_GROUP_MAP.put(groupId, channelGroup);
     }
 
+    public static ChannelGroup getChannelGroup(String groupId) {
+        return GROUP_ID_CHANNEL_GROUP_MAP.get(groupId);
+    }
+
 }

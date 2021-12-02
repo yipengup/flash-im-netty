@@ -3,9 +3,7 @@ package com.yipengup.client;
 import com.yipengup.client.command.ConsoleCommand;
 import com.yipengup.client.command.ConsoleCommandManager;
 import com.yipengup.client.command.LoginConsoleCommand;
-import com.yipengup.client.handler.CreateGroupResponsePacketHandler;
-import com.yipengup.client.handler.LoginResponsePacketHandler;
-import com.yipengup.client.handler.MessageResponsePacketHandler;
+import com.yipengup.client.handler.*;
 import com.yipengup.codec.PacketDecode;
 import com.yipengup.codec.PacketEncode;
 import com.yipengup.server.handler.Spliter;
@@ -44,6 +42,9 @@ public class NettyClient {
                         ch.pipeline().addLast(new LoginResponsePacketHandler());
                         ch.pipeline().addLast(new MessageResponsePacketHandler());
                         ch.pipeline().addLast(new CreateGroupResponsePacketHandler());
+                        ch.pipeline().addLast(new GroupMemberListResponsePacketHandler());
+                        ch.pipeline().addLast(new GroupJoinMemberResponsePacketHandler());
+                        ch.pipeline().addLast(new GroupDeleteMemberResponsePacketHandler());
                         ch.pipeline().addLast(new PacketEncode());
                     }
                 });

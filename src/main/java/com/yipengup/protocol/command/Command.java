@@ -38,5 +38,35 @@ public interface Command {
      */
     byte CREATE_GROUP_RESPONSE = 6;
 
+    /**
+     * 群成员列表请求
+     */
+    byte GROUP_MEMBER_LIST_REQUEST = 7;
+
+    /**
+     * 群成员列表响应
+     */
+    byte GROUP_MEMBER_LIST_RESPONSE = 8;
+
+    /**
+     * 添加组成员请求
+     */
+    byte GROUP_JOIN_MEMBER_REQUEST = 9;
+
+    /**
+     * 添加组成员响应
+     */
+    byte GROUP_JOIN_MEMBER_RESPONSE = 10;
+
+    /**
+     * 删除组成员请求
+     */
+    byte GROUP_DELETE_MEMBER_REQUEST = 11;
+
+    /**
+     * 删除组成员响应
+     */
+    byte GROUP_DELETE_MEMBER_RESPONSE = 12;
+
 
 }

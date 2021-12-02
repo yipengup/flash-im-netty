@@ -36,6 +36,9 @@ public class NettyServer {
                         ch.pipeline().addLast(new AuthHandler());
                         ch.pipeline().addLast(new MessageRequestPacketHandler());
                         ch.pipeline().addLast(new CreateGroupRequestPacketHandler());
+                        ch.pipeline().addLast(new GroupMemberListRequestPacketHandler());
+                        ch.pipeline().addLast(new GroupJoinMemberRequestPacketHandler());
+                        ch.pipeline().addLast(new GroupDeleteMemberRequestPacketHandler());
                         ch.pipeline().addLast(new PacketEncode());
                     }
                 });

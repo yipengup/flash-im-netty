@@ -1,12 +1,8 @@
 package com.yipengup.protocol.packet;
 
 import com.yipengup.protocol.command.Command;
-import com.yipengup.protocol.packet.request.CreateGroupRequestPacket;
-import com.yipengup.protocol.packet.request.LoginRequestPacket;
-import com.yipengup.protocol.packet.request.MessageRequestPacket;
-import com.yipengup.protocol.packet.response.CreateGroupResponsePacket;
-import com.yipengup.protocol.packet.response.LoginResponsePacket;
-import com.yipengup.protocol.packet.response.MessageResponsePacket;
+import com.yipengup.protocol.packet.request.*;
+import com.yipengup.protocol.packet.response.*;
 import com.yipengup.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -52,6 +48,12 @@ public class PacketCodeC {
         PACKET_MAP.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
         PACKET_MAP.put(Command.CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
         PACKET_MAP.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+        PACKET_MAP.put(Command.GROUP_MEMBER_LIST_REQUEST, GroupMemberListRequestPacket.class);
+        PACKET_MAP.put(Command.GROUP_MEMBER_LIST_RESPONSE, GroupMemberListResponsePacket.class);
+        PACKET_MAP.put(Command.GROUP_JOIN_MEMBER_REQUEST, GroupJoinMemberRequestPacket.class);
+        PACKET_MAP.put(Command.GROUP_JOIN_MEMBER_RESPONSE, GroupJoinMemberResponsePacket.class);
+        PACKET_MAP.put(Command.GROUP_DELETE_MEMBER_REQUEST, GroupDeleteMemberRequestPacket.class);
+        PACKET_MAP.put(Command.GROUP_DELETE_MEMBER_RESPONSE, GroupDeleteMemberResponsePacket.class);
     }
 
     /**
