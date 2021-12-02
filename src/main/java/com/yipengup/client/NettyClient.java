@@ -4,8 +4,7 @@ import com.yipengup.client.command.ConsoleCommand;
 import com.yipengup.client.command.ConsoleCommandManager;
 import com.yipengup.client.command.LoginConsoleCommand;
 import com.yipengup.client.handler.*;
-import com.yipengup.codec.PacketDecode;
-import com.yipengup.codec.PacketEncode;
+import com.yipengup.codec.PacketCodeCHandler;
 import com.yipengup.server.handler.Spliter;
 import com.yipengup.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
@@ -39,7 +38,7 @@ public class NettyClient {
                         // 将客户端Channel处理器注册到管道中
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         // 单例模式，多个channel共享同一个handler
-                        ch.pipeline().addLast(new PacketDecode());
+                        ch.pipeline().addLast(PacketCodeCHandler.INSTANCE);
                         ch.pipeline().addLast(LoginResponsePacketHandler.INSTANCE);
                         ch.pipeline().addLast(MessageResponsePacketHandler.INSTANCE);
                         ch.pipeline().addLast(CreateGroupResponsePacketHandler.INSTANCE);
@@ -47,7 +46,6 @@ public class NettyClient {
                         ch.pipeline().addLast(GroupJoinMemberResponsePacketHandler.INSTANCE);
                         ch.pipeline().addLast(GroupDeleteMemberResponsePacketHandler.INSTANCE);
                         ch.pipeline().addLast(GroupMessageResponsePacketHandler.INSTANCE);
-                        ch.pipeline().addLast(new PacketEncode());
                     }
                 });
 
