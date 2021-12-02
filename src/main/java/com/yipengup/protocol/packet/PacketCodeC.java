@@ -1,8 +1,10 @@
 package com.yipengup.protocol.packet;
 
 import com.yipengup.protocol.command.Command;
+import com.yipengup.protocol.packet.request.CreateGroupRequestPacket;
 import com.yipengup.protocol.packet.request.LoginRequestPacket;
 import com.yipengup.protocol.packet.request.MessageRequestPacket;
+import com.yipengup.protocol.packet.response.CreateGroupResponsePacket;
 import com.yipengup.protocol.packet.response.LoginResponsePacket;
 import com.yipengup.protocol.packet.response.MessageResponsePacket;
 import com.yipengup.serialize.Serializer;
@@ -48,6 +50,8 @@ public class PacketCodeC {
         PACKET_MAP.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
         PACKET_MAP.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
         PACKET_MAP.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
+        PACKET_MAP.put(Command.CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        PACKET_MAP.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
     }
 
     /**

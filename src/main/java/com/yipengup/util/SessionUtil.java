@@ -3,10 +3,12 @@ package com.yipengup.util;
 import com.yipengup.attribute.Attributes;
 import com.yipengup.session.Session;
 import io.netty.channel.Channel;
+import io.netty.channel.group.ChannelGroup;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionUtil {
 
     private static final Map<String, Channel> USER_ID_CHANNEL_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, ChannelGroup> GROUP_ID_CHANNEL_GROUP_MAP = new ConcurrentHashMap<>();
 
     public static void bindSession(Session session, Channel channel) {
         USER_ID_CHANNEL_MAP.put(session.getUserId(), channel);
@@ -31,7 +34,7 @@ public class SessionUtil {
     }
 
     public static boolean hasLogin(Channel channel) {
-        return channel.hasAttr(Attributes.SESSION);
+        return channel.hasAttr(Attributes.SESSION) && Objects.nonNull(channel.attr(Attributes.SESSION).get());
     }
 
     public static Session getSession(Channel channel) {
@@ -40,6 +43,10 @@ public class SessionUtil {
 
     public static Channel getChannel(String userId) {
         return USER_ID_CHANNEL_MAP.get(userId);
+    }
+
+    public static void bindGroup(String groupId, ChannelGroup channelGroup) {
+        GROUP_ID_CHANNEL_GROUP_MAP.put(groupId, channelGroup);
     }
 
 }

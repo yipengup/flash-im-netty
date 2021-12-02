@@ -7,21 +7,25 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author yipengup
- * @date 2021/11/26
+ * @date 2021/12/2
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequestPacket extends Packet {
+public class CreateGroupRequestPacket extends Packet {
 
-    private String username;
-    private String password;
+    /**
+     * 用户id列表
+     */
+    private List<String> userIds;
 
     @Override
     public Byte getCommand() {
-        return Command.LOGIN_REQUEST;
+        return Command.CREATE_GROUP_REQUEST;
     }
 }

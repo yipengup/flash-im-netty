@@ -28,4 +28,15 @@ public interface Command {
      */
     byte MESSAGE_RESPONSE = 4;
 
+    /**
+     * 创建群请求
+     */
+    byte CREATE_GROUP_REQUEST = 5;
+
+    /**
+     * 创建群响应
+     */
+    byte CREATE_GROUP_RESPONSE = 6;
+
+
 }

@@ -2,10 +2,7 @@ package com.yipengup.server;
 
 import com.yipengup.codec.PacketDecode;
 import com.yipengup.codec.PacketEncode;
-import com.yipengup.server.handler.AuthHandler;
-import com.yipengup.server.handler.LoginRequestPacketHandler;
-import com.yipengup.server.handler.MessageRequestPacketHandler;
-import com.yipengup.server.handler.Spliter;
+import com.yipengup.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -38,6 +35,7 @@ public class NettyServer {
                         ch.pipeline().addLast(new LoginRequestPacketHandler());
                         ch.pipeline().addLast(new AuthHandler());
                         ch.pipeline().addLast(new MessageRequestPacketHandler());
+                        ch.pipeline().addLast(new CreateGroupRequestPacketHandler());
                         ch.pipeline().addLast(new PacketEncode());
                     }
                 });

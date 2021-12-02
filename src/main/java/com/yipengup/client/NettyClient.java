@@ -1,11 +1,13 @@
 package com.yipengup.client;
 
+import com.yipengup.client.command.ConsoleCommand;
+import com.yipengup.client.command.ConsoleCommandManager;
+import com.yipengup.client.command.LoginConsoleCommand;
+import com.yipengup.client.handler.CreateGroupResponsePacketHandler;
 import com.yipengup.client.handler.LoginResponsePacketHandler;
 import com.yipengup.client.handler.MessageResponsePacketHandler;
 import com.yipengup.codec.PacketDecode;
 import com.yipengup.codec.PacketEncode;
-import com.yipengup.protocol.packet.request.LoginRequestPacket;
-import com.yipengup.protocol.packet.request.MessageRequestPacket;
 import com.yipengup.server.handler.Spliter;
 import com.yipengup.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
@@ -41,6 +43,7 @@ public class NettyClient {
                         ch.pipeline().addLast(new PacketDecode());
                         ch.pipeline().addLast(new LoginResponsePacketHandler());
                         ch.pipeline().addLast(new MessageResponsePacketHandler());
+                        ch.pipeline().addLast(new CreateGroupResponsePacketHandler());
                         ch.pipeline().addLast(new PacketEncode());
                     }
                 });
@@ -63,35 +66,14 @@ public class NettyClient {
         new Thread(() -> {
             while (!Thread.interrupted() && channel.isActive()) {
                 Scanner scanner = new Scanner(System.in);
-                // 客户端启动之后直接向服务端发送登录请求
+                ConsoleCommand consoleCommand;
+                // 客户没有登录的话必须发起先发起登录请求
                 if (!SessionUtil.hasLogin(channel)) {
-                    LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-
-                    System.out.println(new Date() + "：请输入姓名：");
-                    String username = scanner.nextLine();
-                    System.out.println(new Date() + "：请输入密码：");
-                    String password = scanner.nextLine();
-                    loginRequestPacket.setUsername(username);
-                    loginRequestPacket.setPassword(password);
-                    channel.writeAndFlush(loginRequestPacket);
-
-                    // 当前线程睡眠一段时间再次选择发送消息的对象
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    consoleCommand = new LoginConsoleCommand();
+                } else {
+                    consoleCommand = new ConsoleCommandManager();
                 }
-
-                System.out.println(new Date() + "：请输入要发送消息的userId：");
-                String userId = scanner.nextLine();
-
-                System.out.println(new Date() + "：请输入要发送消息：");
-                String message = scanner.nextLine();
-                MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
-                messageRequestPacket.setToUserId(userId);
-                messageRequestPacket.setMessage(message);
-                channel.writeAndFlush(messageRequestPacket);
+                consoleCommand.exec(scanner, channel);
             }
         }).start();
     }

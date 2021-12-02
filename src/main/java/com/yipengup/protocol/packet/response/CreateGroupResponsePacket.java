@@ -1,4 +1,4 @@
-package com.yipengup.protocol.packet.request;
+package com.yipengup.protocol.packet.response;
 
 import com.yipengup.protocol.command.Command;
 import com.yipengup.protocol.packet.Packet;
@@ -7,21 +7,26 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author yipengup
- * @date 2021/11/26
+ * @date 2021/12/2
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequestPacket extends Packet {
+public class CreateGroupResponsePacket extends Packet {
 
-    private String username;
-    private String password;
+    private String groupId;
+    private List<String> userId;
+    private Boolean success;
+    private String reason;
+    private String message;
 
     @Override
     public Byte getCommand() {
-        return Command.LOGIN_REQUEST;
+        return Command.CREATE_GROUP_RESPONSE;
     }
 }
