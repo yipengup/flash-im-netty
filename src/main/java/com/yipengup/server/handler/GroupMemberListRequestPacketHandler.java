@@ -5,6 +5,7 @@ import com.yipengup.protocol.packet.response.GroupMemberListResponsePacket;
 import com.yipengup.session.Session;
 import com.yipengup.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -17,7 +18,14 @@ import java.util.Objects;
  * @author yipengup
  * @date 2021/12/2
  */
+@ChannelHandler.Sharable
 public class GroupMemberListRequestPacketHandler extends SimpleChannelInboundHandler<GroupMemberListRequestPacket> {
+
+    public static final GroupMemberListRequestPacketHandler INSTANCE = new GroupMemberListRequestPacketHandler();
+
+    protected GroupMemberListRequestPacketHandler() {
+
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, GroupMemberListRequestPacket msg) throws Exception {

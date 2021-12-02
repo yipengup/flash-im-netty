@@ -5,6 +5,7 @@ import com.yipengup.protocol.packet.response.MessageResponsePacket;
 import com.yipengup.session.Session;
 import com.yipengup.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -15,7 +16,15 @@ import java.util.Objects;
  * @author yipengup
  * @date 2021/11/30
  */
+@ChannelHandler.Sharable
 public class MessageRequestPacketHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
+
+    public static final MessageRequestPacketHandler INSTANCE = new MessageRequestPacketHandler();
+
+    protected MessageRequestPacketHandler() {
+
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket msg) throws Exception {
 

@@ -38,14 +38,15 @@ public class NettyClient {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 将客户端Channel处理器注册到管道中
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
+                        // 单例模式，多个channel共享同一个handler
                         ch.pipeline().addLast(new PacketDecode());
-                        ch.pipeline().addLast(new LoginResponsePacketHandler());
-                        ch.pipeline().addLast(new MessageResponsePacketHandler());
-                        ch.pipeline().addLast(new CreateGroupResponsePacketHandler());
-                        ch.pipeline().addLast(new GroupMemberListResponsePacketHandler());
-                        ch.pipeline().addLast(new GroupJoinMemberResponsePacketHandler());
-                        ch.pipeline().addLast(new GroupDeleteMemberResponsePacketHandler());
-                        ch.pipeline().addLast(new GroupMessageResponsePacketHandler());
+                        ch.pipeline().addLast(LoginResponsePacketHandler.INSTANCE);
+                        ch.pipeline().addLast(MessageResponsePacketHandler.INSTANCE);
+                        ch.pipeline().addLast(CreateGroupResponsePacketHandler.INSTANCE);
+                        ch.pipeline().addLast(GroupMemberListResponsePacketHandler.INSTANCE);
+                        ch.pipeline().addLast(GroupJoinMemberResponsePacketHandler.INSTANCE);
+                        ch.pipeline().addLast(GroupDeleteMemberResponsePacketHandler.INSTANCE);
+                        ch.pipeline().addLast(GroupMessageResponsePacketHandler.INSTANCE);
                         ch.pipeline().addLast(new PacketEncode());
                     }
                 });

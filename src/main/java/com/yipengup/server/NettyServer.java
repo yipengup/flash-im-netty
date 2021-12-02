@@ -32,14 +32,15 @@ public class NettyServer {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         ch.pipeline().addLast(new PacketDecode());
-                        ch.pipeline().addLast(new LoginRequestPacketHandler());
-                        ch.pipeline().addLast(new AuthHandler());
-                        ch.pipeline().addLast(new MessageRequestPacketHandler());
-                        ch.pipeline().addLast(new CreateGroupRequestPacketHandler());
-                        ch.pipeline().addLast(new GroupMemberListRequestPacketHandler());
-                        ch.pipeline().addLast(new GroupJoinMemberRequestPacketHandler());
-                        ch.pipeline().addLast(new GroupDeleteMemberRequestPacketHandler());
-                        ch.pipeline().addLast(new GroupMessageRequestPacketHandler());
+                        // 单例模式，多个channel共享同一个handler
+                        ch.pipeline().addLast(LoginRequestPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(AuthHandler.INSTANCE);
+                        ch.pipeline().addLast(MessageRequestPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(CreateGroupRequestPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(GroupMemberListRequestPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(GroupJoinMemberRequestPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(GroupDeleteMemberRequestPacketHandler.INSTANCE);
+                        ch.pipeline().addLast(GroupMessageRequestPacketHandler.INSTANCE);
                         ch.pipeline().addLast(new PacketEncode());
                     }
                 });

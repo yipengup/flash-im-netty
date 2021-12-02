@@ -1,6 +1,7 @@
 package com.yipengup.client.handler;
 
 import com.yipengup.protocol.packet.response.GroupDeleteMemberResponsePacket;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -11,7 +12,14 @@ import java.util.Objects;
  * @author yipengup
  * @date 2021/12/2
  */
+@ChannelHandler.Sharable
 public class GroupDeleteMemberResponsePacketHandler extends SimpleChannelInboundHandler<GroupDeleteMemberResponsePacket> {
+
+    public static final GroupDeleteMemberResponsePacketHandler INSTANCE = new GroupDeleteMemberResponsePacketHandler();
+
+    protected GroupDeleteMemberResponsePacketHandler() {
+
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, GroupDeleteMemberResponsePacket msg) throws Exception {

@@ -4,6 +4,7 @@ import com.yipengup.protocol.packet.request.GroupMessageRequestPacket;
 import com.yipengup.protocol.packet.response.GroupMessageResponsePacket;
 import com.yipengup.session.Session;
 import com.yipengup.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -15,7 +16,15 @@ import java.util.Objects;
  * @author yipengup
  * @date 2021/12/2
  */
+@ChannelHandler.Sharable
 public class GroupMessageRequestPacketHandler extends SimpleChannelInboundHandler<GroupMessageRequestPacket> {
+
+    public static final GroupMessageRequestPacketHandler INSTANCE = new GroupMessageRequestPacketHandler();
+
+    protected GroupMessageRequestPacketHandler() {
+
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, GroupMessageRequestPacket msg) throws Exception {
         System.out.println(new Date() + "：收到发送给聊天室【" + msg.getGroupId() + "】的消息");

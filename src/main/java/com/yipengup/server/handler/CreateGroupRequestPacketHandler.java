@@ -4,6 +4,7 @@ import com.yipengup.protocol.packet.request.CreateGroupRequestPacket;
 import com.yipengup.protocol.packet.response.CreateGroupResponsePacket;
 import com.yipengup.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.DefaultChannelGroup;
@@ -14,7 +15,14 @@ import java.util.*;
  * @author yipengup
  * @date 2021/12/2
  */
+@ChannelHandler.Sharable
 public class CreateGroupRequestPacketHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
+
+    public static final CreateGroupRequestPacketHandler INSTANCE = new CreateGroupRequestPacketHandler();
+
+    protected CreateGroupRequestPacketHandler() {
+
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket msg) throws Exception {

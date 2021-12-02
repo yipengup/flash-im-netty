@@ -3,6 +3,7 @@ package com.yipengup.client.handler;
 import com.yipengup.protocol.packet.response.LoginResponsePacket;
 import com.yipengup.session.Session;
 import com.yipengup.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -13,7 +14,15 @@ import java.util.Objects;
  * @author yipengup
  * @date 2021/11/30
  */
+@ChannelHandler.Sharable
 public class LoginResponsePacketHandler extends SimpleChannelInboundHandler<LoginResponsePacket> {
+
+
+    public static final LoginResponsePacketHandler INSTANCE = new LoginResponsePacketHandler();
+
+    protected LoginResponsePacketHandler() {
+
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket msg) throws Exception {

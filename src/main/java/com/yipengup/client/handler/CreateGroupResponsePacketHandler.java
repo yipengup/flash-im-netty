@@ -1,6 +1,7 @@
 package com.yipengup.client.handler;
 
 import com.yipengup.protocol.packet.response.CreateGroupResponsePacket;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -11,7 +12,15 @@ import java.util.Objects;
  * @author yipengup
  * @date 2021/12/2
  */
+// 加上注解标识，表明该handler是可以多个channel共享的
+@ChannelHandler.Sharable
 public class CreateGroupResponsePacketHandler extends SimpleChannelInboundHandler<CreateGroupResponsePacket> {
+
+    public static final CreateGroupResponsePacketHandler INSTANCE = new CreateGroupResponsePacketHandler();
+
+    protected CreateGroupResponsePacketHandler() {
+
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupResponsePacket msg) throws Exception {

@@ -4,6 +4,7 @@ import com.yipengup.protocol.packet.request.LoginRequestPacket;
 import com.yipengup.protocol.packet.response.LoginResponsePacket;
 import com.yipengup.session.Session;
 import com.yipengup.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -18,7 +19,14 @@ import java.util.UUID;
  * @author yipengup
  * @date 2021/11/30
  */
+@ChannelHandler.Sharable
 public class LoginRequestPacketHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+
+    public static final LoginRequestPacketHandler INSTANCE = new LoginRequestPacketHandler();
+
+    protected LoginRequestPacketHandler() {
+
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket msg) throws Exception {
